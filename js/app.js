@@ -1,275 +1,256 @@
-// =========================
-// CONSTANTS & CONFIG
-// =========================
-const STORAGE_KEY = "zarahome_modal_dismissed";
+// ============================================ //
+// 1. ELEMENTOS DEL DOM (conexión con HTML)
+// ============================================ //
+const countryModal = document.getElementById("countryModal");
+const modalClose = document.getElementById("modalClose");
+const continueBtn = document.getElementById("continueBtn");
+const header = document.getElementById("header");
+const heroImage = document.querySelector(".hero-image");
+const heroNavLinks = document.querySelectorAll(".hero-nav-link");
+const menuBtn = document.getElementById("menuBtn");
+const dropdownMenu = document.getElementById("mobileMenu");
+const cartBtn = document.querySelector(".cart-icon");
+const cartCount = document.getElementById("cartCount");
+// Submenú para cargar productos
+const submenuLinks = document.querySelectorAll(".submenu a");
+const container = document.getElementById("productsContainer");
+// ============================================ //
+// 2. VARIABLES GLOBALES (los almacenes)
+// ============================================ //
+const STORAGE_KEY = "zarahome_modal_dismissed"; // Clave para localStorage
+let isMenuOpen = false; // Estado del menú móvil
 
-// =========================
-// MODAL FUNCTIONALITY
-// =========================
-(function initModal() {
-  const countryModal = document.getElementById("countryModal");
-  const modalClose = document.getElementById("modalClose");
-  const continueBtn = document.getElementById("continueBtn");
+// ============================================ //
+// 3. FUNCIÓN PARA MODAL (como tu ejercicio de producto)
+// ============================================ //
+function closeModal() {
+  countryModal.classList.add("hidden"); // Ocultar modal
+  localStorage.setItem(STORAGE_KEY, "true"); // GUARDAR en localStorage
+  document.body.style.overflow = ""; // Restaurar scroll
+}
 
-  // Early return if modal doesn't exist
-  if (!countryModal) return;
-
-  function closeModal() {
-    countryModal.classList.add("hidden");
-    localStorage.setItem(STORAGE_KEY, "true");
-    document.body.style.overflow = "";
+function openModal() {
+  const modalDismissed = localStorage.getItem(STORAGE_KEY); // RECUPERAR de localStorage
+  if (!modalDismissed) {
+    // Si NO lo ha visto antes
+    countryModal.classList.remove("hidden"); // Mostrar modal
+    document.body.style.overflow = "hidden"; // Bloquear scroll
+  }
+}
+//FETCH
+async function loadProducts(category) {
+  try {
+    console.log("Cargando productos de:", category);
+    
+    const response = await fetch("./data/toallas.json");
+    if (!response.ok) throw new Error("No encuentra el JSON");
+    
+    const products = await response.json();
+    console.log("Productos cargados:", products);
+    renderProducts(products);
+    
+  } catch (error) {
+    console.error("Error al cargar productos:", error);
+    productsContainer.innerHTML = "<p>Error cargando productos</p>";
+  }
+}
+//EVENTO DE CLICK EN SUBMENÚ
+submenuLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const category = link.dataset.category;
+    loadProducts(category);
+  });
+});
+// RENDERIZAR PRODUCTOS
+function renderProducts(products) {
+ if (!container) {
+    console.error("No encuentro Container");
+    return;
   }
 
-  function openModal() {
-    const modalDismissed = localStorage.getItem(STORAGE_KEY);
-    if (!modalDismissed) {
-      countryModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
+  container.innerHTML = products.map(product => `
+    <div class="product-card">
+      <img src="./img/${product.image}" alt="${product.name}">
+      <h3>${product.name}</h3>
+      <p>${product.material}</p>
+      <p class="price">${product.price} €</p>
+      <div class="colors">
+        ${product.color.map(c => `<span class="color-tag">${c}</span>`).join("")}
+      </div>
+    </div>
+  `).join("");
+  
+  // Cerrar menú después de seleccionar producto
+   if (isMenuOpen) toggleMenu(false);
+}
+
+// ============================================ //
+// 4. FUNCIÓN PARA HEADER CON SCROLL
+// ============================================ //
+function updateHeader() {
+  if (window.scrollY > 50) {
+    // Si scroll > 50px
+    header.classList.add("scrolled"); // Añadir clase
+  } else {
+    header.classList.remove("scrolled"); // Quitar clase
+  }
+}
+
+// ============================================ //
+// 5. FUNCIÓN PARA CAMBIAR IMAGEN HERO (como filtros)
+// ============================================ //
+function updateHeroImage(clickedLink) {
+  // Quitar active de todos
+  heroNavLinks.forEach((link) => link.classList.remove("active"));
+  // Poner active al clickado
+  clickedLink.classList.add("active");
+
+  // Cambiar imagen con efecto fade
+  const imgUrl = clickedLink.dataset.image;
+  if (imgUrl && heroImage.src !== imgUrl) {
+    heroImage.style.opacity = "0.5"; // Transparencia
+    setTimeout(() => {
+      // Esperar
+      heroImage.src = imgUrl; // Cambiar imagen
+      heroImage.style.opacity = "1"; // Restaurar opacidad
+    }, 150);
+  }
+}
+
+// ============================================ //
+// 6. FUNCIÓN PARA MENÚ MÓVIL (hamburguesa)
+// ============================================ //
+function toggleMenu(open = !isMenuOpen) {
+  isMenuOpen = open;
+  mobileMenu.classList.toggle("show", isMenuOpen);
+  menuBtn.classList.toggle("active", isMenuOpen);
+  document.body.style.overflow = isMenuOpen ? "hidden" : "";
+}
+
+// ============================================ //
+// 7. FUNCIÓN PARA ACTUALIZAR CONTADOR CARRITO
+// ============================================ //
+function updateCartCount() {
+  let count = 0;
+  try {
+    const cartData = localStorage.getItem("zarahome_cart"); // RECUPERAR carrito
+    if (cartData) {
+      const cart = JSON.parse(cartData); // Convertir a objeto
+      count = cart.length || 0;
     }
+  } catch (e) {
+    console.warn("Error al leer carrito");
   }
 
-  // Initialize modal
+  // Mostrar contador
+  cartCount.textContent = count > 0 ? `(${count})` : "";
+}
+
+
+// ============================================ //
+// 8. FUNCIÓN PARA INICIALIZAR TODO (init CORREGIDA)
+// ============================================ //
+function init() {
+  console.log("🚀 Iniciando aplicación...");
+  
+  // 8.0 Verificar elementos críticos
+  if (!container) console.warn("⚠️ No hay productsContainer");
+  if (!submenuLinks.length) console.warn("⚠️ No hay enlaces de submenú");
+  
+  // 8.1 Inicializar modal
   openModal();
 
-  // Event listeners
-  modalClose?.addEventListener("click", closeModal);
-  continueBtn?.addEventListener("click", closeModal);
+  if (modalClose) modalClose.addEventListener("click", closeModal);
+  if (continueBtn) continueBtn.addEventListener("click", closeModal);
 
-  // Close when clicking outside
-  countryModal.addEventListener("click", (e) => {
-    if (e.target === countryModal) closeModal();
-  });
-
-  // Close with Escape key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && !countryModal.classList.contains("hidden")) {
-      closeModal();
-    }
-  });
-})();
-
-// =========================
-// HEADER SCROLL EFFECT
-// =========================
-(function initHeaderScroll() {
-  const header = document.getElementById("header");
-  
-  if (!header) return;
-
-  let ticking = false;
-  const SCROLL_THRESHOLD = 50;
-
-  function updateHeader() {
-    header.classList.toggle("scrolled", window.scrollY > SCROLL_THRESHOLD);
-    ticking = false;
-  }
-
-  window.addEventListener("scroll", () => {
-    if (!ticking) {
-      window.requestAnimationFrame(updateHeader);
-      ticking = true;
-    }
-  });
-
-  // Check initial scroll position
-  updateHeader();
-})();
-
-// =========================
-// HERO IMAGE SWAP & PRELOAD
-// =========================
-(function initHero() {
-  const heroImage = document.querySelector(".hero-image");
-  const heroNavLinks = document.querySelectorAll(".hero-nav-link");
-  const heroNavContainer = document.querySelector(".hero-nav");
-
-  // Early return if hero elements don't exist
-  if (!heroImage || !heroNavLinks.length) return;
-
-  // Preload all hero images
-  heroNavLinks.forEach((link) => {
-    const imgUrl = link.dataset.image;
-    if (imgUrl) {
-      const preload = new Image();
-      preload.src = imgUrl;
-    }
-  });
-
-  // Function to update hero image
-  function updateHeroImage(clickedLink) {
-    // Update active states
-    heroNavLinks.forEach((link) => link.classList.remove("active"));
-    clickedLink.classList.add("active");
-
-    // Update image with fade effect
-    const imgUrl = clickedLink.dataset.image;
-    if (imgUrl && heroImage.src !== imgUrl) {
-      // Add fade-out effect
-      heroImage.style.opacity = "0.5";
-      
-      setTimeout(() => {
-        heroImage.src = imgUrl;
-        heroImage.style.opacity = "1";
-      }, 150);
-    }
-  }
-
-  // Add click handlers
-  heroNavLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      updateHeroImage(link);
-    });
-  });
-
-  // Add keyboard navigation
-  if (heroNavContainer) {
-    heroNavContainer.addEventListener("keydown", (e) => {
-      const currentActive = document.querySelector(".hero-nav-link.active");
-      const links = Array.from(heroNavLinks);
-      const currentIndex = links.indexOf(currentActive);
-
-      let newIndex;
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        newIndex = (currentIndex + 1) % links.length;
-      } else if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        newIndex = (currentIndex - 1 + links.length) % links.length;
-      } else {
-        return;
-      }
-
-      links[newIndex].focus();
-      updateHeroImage(links[newIndex]);
-    });
-  }
-})();
-
-// =========================
-// MOBILE MENU FUNCTIONALITY
-// =========================
-(function initMobileMenu() {
-  const menuBtn = document.getElementById("menuBtn");
-  const dropdownMenu = document.querySelector(".dropdown-menu");
-
-  if (!menuBtn || !dropdownMenu) return;
-
-  let isMenuOpen = false;
-
-  function toggleMenu(open = !isMenuOpen) {
-    isMenuOpen = open;
-    dropdownMenu.classList.toggle("active", isMenuOpen);
-    menuBtn.classList.toggle("active", isMenuOpen);
-    menuBtn.setAttribute("aria-expanded", isMenuOpen);
-    
-    // Prevent body scroll when menu is open
-    document.body.style.overflow = isMenuOpen ? "hidden" : "";
-  }
-
-  menuBtn.addEventListener("click", () => toggleMenu());
-
-  // Close menu when clicking outside
-  document.addEventListener("click", (e) => {
-    if (isMenuOpen && !menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-      toggleMenu(false);
-    }
-  });
-
-  // Close menu with Escape key
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && isMenuOpen) {
-      toggleMenu(false);
-      menuBtn.focus();
-    }
-  });
-
-  // Close menu when clicking on a link
-  dropdownMenu.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => toggleMenu(false));
-  });
-})();
-
-// =========================
-// CART COUNTER FUNCTIONALITY
-// =========================
-(function initCart() {
-  const cartBtn = document.querySelector(".cart-icon");
-  const cartCount = document.getElementById("cartCount");
-
-  if (!cartBtn || !cartCount) return;
-
-  // Example: Get cart count from localStorage or initialize to 0
-  function updateCartCount() {
-    let count = 0;
-    try {
-      const cartData = localStorage.getItem("zarahome_cart");
-      if (cartData) {
-        const cart = JSON.parse(cartData);
-        count = cart.length || 0;
-      }
-    } catch (e) {
-      console.warn("Could not parse cart data");
-    }
-
-    cartCount.textContent = count > 0 ? `(${count})` : "";
-    cartCount.setAttribute("aria-label", 
-      count === 0 ? "Carrito vacío" : `${count} producto${count !== 1 ? 's' : ''} en el carrito`
-    );
-  }
-
-  // Initial update
-  updateCartCount();
-
-  // Optional: Listen for storage changes (if cart is modified in another tab)
-  window.addEventListener("storage", (e) => {
-    if (e.key === "zarahome_cart") {
-      updateCartCount();
-    }
-  });
-})();
-
-// =========================
-// UTILITIES & PERFORMANCE
-// =========================
-(function initUtils() {
-  // Add touch support detection class
-  if ('ontouchstart' in window) {
-    document.documentElement.classList.add('touch');
-  }
-
-  // Lazy load images (if not using native loading)
-  if ('loading' in HTMLImageElement.prototype) {
-    const images = document.querySelectorAll('img[loading="lazy"]');
-    images.forEach(img => {
-      img.setAttribute('loading', 'lazy');
+  if (countryModal) {
+    countryModal.addEventListener("click", (e) => {
+      if (e.target === countryModal) closeModal();
     });
   }
 
-  // Smooth scroll for anchor links (if any)
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (href === "#") return;
-      
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
+  // 8.2 Header scroll
+  if (header) {
+    updateHeader();
+    window.addEventListener("scroll", updateHeader);
+  }
+
+  // 8.3 Hero images
+  if (heroNavLinks.length) {
+    heroNavLinks.forEach((link) => {
+      const imgUrl = link.dataset.image;
+      if (imgUrl) {
+        const preload = new Image();
+        preload.src = imgUrl;
       }
     });
-  });
-})();
 
-// =========================
-// CONSOLE MESSAGE (branding)
-// =========================
-console.log(
-  "%cZARA HOME",
-  'font-family: "Cormorant Garamond", serif; font-size: 24px; font-weight: 300; letter-spacing: 0.2em; color: #1a1a1a;'
-);
+    heroNavLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        updateHeroImage(link);
+      });
+    });
+  }
 
-console.log(
-  "%cBienvenido a la web oficial de Zara Home España",
-  'font-family: "Manrope", sans-serif; font-size: 14px; color: #666;'
-);
+  // 8.4 Menú móvil - ¡CORREGIDO!
+  if (menuBtn && dropdownMenu) {
+    menuBtn.addEventListener("click", () => toggleMenu());
+
+    document.addEventListener("click", (e) => {
+      if (isMenuOpen && 
+          !menuBtn.contains(e.target) && 
+          !dropdownMenu.contains(e.target)) {
+        toggleMenu(false);
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isMenuOpen) {
+        toggleMenu(false);
+        menuBtn.focus();
+      }
+    });
+  }
+
+  // 8.5 Eventos del submenú - ¡CORREGIDO!
+  if (submenuLinks.length > 0) {
+    submenuLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const category = link.dataset.category;
+        console.log("🖱️ Clic en:", category);
+        
+        if (category === "toallas") {
+          loadProducts(category);
+        } else {
+          alert(`Sección "${category}" en desarrollo`);
+        }
+      });
+    });
+  }
+
+  // 8.6 Carrito
+  if (cartBtn && cartCount) {
+    updateCartCount();
+
+    window.addEventListener("storage", (e) => {
+      if (e.key === "zarahome_cart") {
+        updateCartCount();
+      }
+    });
+  }
+
+  // 8.7 Utilidades
+  if ("ontouchstart" in window) {
+    document.documentElement.classList.add("touch");
+  }
+
+  console.log("✅ Aplicación iniciada correctamente");
+}
+
+// ============================================ //
+// 9. ¡ARRANCA TODO!
+// ============================================ //
+document.addEventListener("DOMContentLoaded", init);

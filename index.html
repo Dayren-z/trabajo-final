@@ -47,7 +47,7 @@
           </button>
           <p class="modal-note">
             Estamos presentes en más de 79 regiones. Selecciona la tuya
-            < href="/seleccion-pais">aquí</a>
+            <a href="/seleccion-pais">aquí</a>
           </p>
         </div>
       </div>
@@ -61,29 +61,15 @@
           <span></span>
           <span></span>
         </button>
-        <a href="/" class="logo" aria-label="Zara Home - Ir a inicio">
+      </div>
+      <div class="header-center">
+        <a href="#" class="logo">
           <span class="logo-text">ZARA HOME</span>
         </a>
-        <nav class="dropdown-menu" aria-label="Navegación principal">
-          <ul>
-            <li><a href="/novedades">NOVEDADES</a></li>
-            <li><a href="/metal-trend">METAL TREND</a></li>
-            <li><a href="/vincent-van-dysen">VINCENT VAN DYSEN</a></li>
-            <li><a href="/dormitorio">DORMITORIO</a></li>
-            <li><a href="/decoracion">DECORACIÓN</a></li>
-            <li><a href="/muebles">MUEBLES</a></li>
-            <li><a href="/cocina-y-comedor">COCINA Y COMEDOR</a></li>
-            <li><a href="/bano">BAÑO</a></li>
-            <li><a href="/fragancias">FRAGANCIAS</a></li>
-            <li><a href="/ninos-y-bebes">NIÑOS Y BEBÉS</a></li>
-            <li><a href="/special-prices">SPECIAL PRICES</a></li>
-          </ul>
-        </nav>
       </div>
-
       <div class="header-right">
         <button class="header-icon" aria-label="Iniciar sesión">
-          <span class="visually-hidden">Iniciar sesión</span>
+           Iniciar sesión
           <svg
             width="20"
             height="20"
@@ -91,14 +77,13 @@
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
-            aria-hidden="true"
           >
             <circle cx="12" cy="8" r="4" />
             <path d="M4 21v-2a4 4 0 014-4h8a4 4 0 014 4v2" />
           </svg>
         </button>
         <button class="header-icon" aria-label="Buscar">
-          <span class="visually-hidden">Buscar</span>
+          Buscar
           <svg
             width="20"
             height="20"
@@ -106,14 +91,13 @@
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
-            aria-hidden="true"
           >
             <circle cx="11" cy="11" r="7" />
             <path d="M21 21l-4.35-4.35" />
           </svg>
         </button>
-        <button class="header-icon cart-icon" aria-label="Ver carrito">
-          <span class="visually-hidden">Comprar</span>
+        <button class="header-icon cart-icon" aria-label="Cesta">
+           Cesta
           <svg
             width="20"
             height="20"
@@ -121,96 +105,72 @@
             fill="none"
             stroke="currentColor"
             stroke-width="1.5"
-            aria-hidden="true"
           >
             <path d="M6 6h15l-1.5 9h-13z" />
             <circle cx="9" cy="20" r="1" />
             <circle cx="18" cy="20" r="1" />
             <path d="M6 6L5 3H2" />
           </svg>
-          <span class="cart-count" id="cartCount" aria-label="0 productos en el carrito"></span>
+          <span class="cart-count">(0)</span>
         </button>
       </div>
     </header>
+    <!-- Mobile Menu -->
+<nav class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#">NOVEDADES</a></li>
+    <li><a href="#">METAL TREND</a></li>
+    <li><a href="#">GYM COLLECTION</a></li>
+    <li><a href="#">VINCENT VAN DUYSEN</a></li>
+    <li><a href="#">DORMITORIO</a></li>
+    <li><a href="#">DECORACIÓN</a></li>
+    <li><a href="#">MUEBLES</a></li>
+    <li><a href="#">COCINA Y COMEDOR</a></li>
+    <li class="has-submenu">
+  <a href="#" class="menu-link">BAÑO</a>
+  <ul class="submenu">
+    <li><a href="#" data-category="toallas">TOALLAS</a></li>
+    <li><a href="#" data-category="accesorios">TOALLAS BÁSICAS</a></li>
+    <li><a href="#" data-category="cestas">ALBORNOCES Y ZAPATILLAS</a></li>
+    <li><a href="#" data-category="cestas">CORTINAS DE BAÑO</a></li>
+    <br>
+    <li><a href="#" data-category="cestas">ACCESORIOS DE BAÑO</a></li>
+    <li><a href="#" data-category="cestas">CESTAS</a></li>
+    <li><a href="#" data-category="cestas">TOALLEROS Y COLGADORES</a></li>
+    <li><a href="#" data-category="cestas">ESPEJOS</a></li>
+  </ul>
+</li>
+
+    
+    <li><a href="#">FRAGANCIAS</a></li>
+  </ul>
+</nav>
 
     <!-- Main Content -->
     <main class="main">
       <h1 class="visually-hidden">Zara Home - Colección Hogar</h1>
-      
+       <section id="productsContainer" class="products-grid"></section>
       <!-- Hero Section -->
       <section class="hero" id="hero">
         <h2 class="visually-hidden">Novedades y colecciones destacadas</h2>
-        
+
         <img
           src="./img/cosmetica_01.jpg"
           alt="Colección de cosmética - Novedades Zara Home"
           class="hero-image"
           id="heroImage"
         />
-        
-        <nav class="hero-nav" aria-label="Colecciones destacadas">
+
+        <!-- Navigation Categories -->
+        <nav class="hero-nav">
           <ul class="hero-nav-list">
-            <li>
-              <a
-                href="/novedades"
-                class="hero-nav-link active"
-                data-image="./img/cosmetica_01.jpg"
-              >
-                NOVEDADES
-              </a>
-            </li>
-            <li>
-              <a
-                href="/metal-trend"
-                class="hero-nav-link"
-                data-image="./img/metal_trend.jpg"
-              >
-                METAL TREND
-              </a>
-            </li>
-            <li>
-              <a
-                href="/gym-collection"
-                class="hero-nav-link"
-                data-image="./img/gym_collection.jpg"
-              >
-                GYM COLLECTION
-              </a>
-            </li>
-            <li>
-              <a
-                href="/vincent-van-duysen"
-                class="hero-nav-link"
-                data-image="./img/vincent_van_duysen.jpg"
-              >
-                VINCENT VAN DUYSEN
-              </a>
-            </li>
+            <li><a href="#" class="hero-nav-link active">NOVEDADES</a></li>
+            <li><a href="#" class="hero-nav-link">METAL TREND</a></li>
+            <li><a href="#" class="hero-nav-link">GYM COLLECTION</a></li>
+            <li><a href="#" class="hero-nav-link">VINCENT VAN DUYSEN</a></li>
           </ul>
         </nav>
       </section>
     </main>
-
-    <!-- Inline styles for visually-hidden class (could also be in your CSS file) -->
-    <style>
-      .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        padding: 0;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        border: 0;
-      }
-      
-      .hidden {
-        display: none !important;
-      }
-      
-      .cart-count:empty {
-        display: none;
-      }
-    </style>
   </body>
 </html>
