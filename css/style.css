@@ -377,7 +377,7 @@ body {
 .mobile-menu.show {
   display: flex;
 }
-/*PRUCTOS*/
+
 /* Productos */
 .products-grid {
   display: grid;
@@ -411,7 +411,24 @@ body {
   font-weight: bold;
   color: #333;
 }
+/*BOTON AÑADIR PRODUCTO*/
+/* Añade esto a tu style.css */
+.add-to-cart-btn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
 
+.add-to-cart-btn:hover {
+  background-color: #333;
+}
 /* Menú móvil */
 .mobile-menu {
   display: none;

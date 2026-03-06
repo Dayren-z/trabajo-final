@@ -19,7 +19,7 @@ const container = document.getElementById("productsContainer");
 // ============================================ //
 const STORAGE_KEY = "zarahome_modal_dismissed"; // Clave para localStorage
 let isMenuOpen = false; // Estado del menú móvil
-
+let allProducts = [];//para guardar los productos cargados.
 // ============================================ //
 // 3. FUNCIÓN PARA MODAL (como tu ejercicio de producto)
 // ============================================ //
@@ -40,18 +40,20 @@ function openModal() {
 //FETCH
 async function loadProducts(category) {
   try {
-    console.log("Cargando productos de:", category);
+    console.log("📦 Cargando productos de:", category);
     
     const response = await fetch("./data/toallas.json");
     if (!response.ok) throw new Error("No encuentra el JSON");
     
-    const products = await response.json();
-    console.log("Productos cargados:", products);
-    renderProducts(products);
+    const products = await response.json();  // ← 1º obtenemos los datos
+    console.log("✅ Productos cargados:", products);
+    
+    allProducts = products;  // ← 2º guardamos en variable global (para el carrito)
+    renderProducts(products);  // ← 3º pintamos en pantalla
     
   } catch (error) {
-    console.error("Error al cargar productos:", error);
-    productsContainer.innerHTML = "<p>Error cargando productos</p>";
+    console.error("❌ Error:", error);
+    container.innerHTML = "<p>Error cargando productos</p>";
   }
 }
 //EVENTO DE CLICK EN SUBMENÚ
@@ -78,13 +80,50 @@ function renderProducts(products) {
       <div class="colors">
         ${product.color.map(c => `<span class="color-tag">${c}</span>`).join("")}
       </div>
+      <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+        AÑADIR
+      </button>
     </div>
   `).join("");
   
   // Cerrar menú después de seleccionar producto
    if (isMenuOpen) toggleMenu(false);
 }
-
+// ============================================ //
+// FUNCIÓN PARA AÑADIR AL CARRITO
+// ============================================ //
+function addToCart(productId) {
+  // Buscar el producto en allProducts (necesitas tener esta variable global)
+  const producto = allProducts.find(p => p.id === productId);
+  
+  if (!producto) {
+    console.error("Producto no encontrado");
+    return;
+  }
+  
+  // Recuperar carrito actual o crear uno nuevo
+  let carrito = JSON.parse(localStorage.getItem("zarahome_cart") || "[]");
+  
+  // Añadir producto
+  carrito.push({
+    id: producto.id,
+    name: producto.name,
+    price: producto.price,
+    quantity: 1
+  });
+  
+  // Guardar en localStorage
+  localStorage.setItem("zarahome_cart", JSON.stringify(carrito));
+  
+  // Actualizar contador del carrito
+  updateCartCount();
+  
+  // Feedback opcional
+  console.log(`✅ Añadido: ${producto.name}`);
+  
+  // O un pequeño feedback visual
+  // alert(`✅ ${producto.name} añadido`);
+}
 // ============================================ //
 // 4. FUNCIÓN PARA HEADER CON SCROLL
 // ============================================ //
