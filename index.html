@@ -19,7 +19,7 @@
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Manrope:wght@200;300;400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <script defer src="./js/app.js"></script>
   </head>
 
@@ -53,124 +53,187 @@
       </div>
     </div>
 
-    <!-- Header -->
+      <!-- Header -->
     <header class="header" id="header">
       <div class="header-left">
-        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
-          <span></span>
+        <button class="menu-btn" id="menuBtn">
           <span></span>
           <span></span>
         </button>
       </div>
       <div class="header-center">
-        <a href="#" class="logo">
+        <a href="/" class="logo">
           <span class="logo-text">ZARA HOME</span>
         </a>
       </div>
       <div class="header-right">
-        <button class="header-icon" aria-label="Iniciar sesión">
-           Iniciar sesión
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 21v-2a4 4 0 014-4h8a4 4 0 014 4v2" />
+        <button class="header-icon" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/>
           </svg>
         </button>
-        <button class="header-icon" aria-label="Buscar">
-          Buscar
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <circle cx="11" cy="11" r="7" />
-            <path d="M21 21l-4.35-4.35" />
+        <button class="header-icon" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="7"/>
+            <path d="M21 21l-4.35-4.35"/>
           </svg>
         </button>
-        <button class="header-icon cart-icon" aria-label="Cesta">
-           Cesta
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <path d="M6 6h15l-1.5 9h-13z" />
-            <circle cx="9" cy="20" r="1" />
-            <circle cx="18" cy="20" r="1" />
-            <path d="M6 6L5 3H2" />
+        <button class="header-icon cart-icon" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 6h15l-1.5 9h-13z"/>
+            <circle cx="9" cy="20" r="1"/>
+            <circle cx="18" cy="20" r="1"/>
+            <path d="M6 6L5 3H2"/>
           </svg>
           <span class="cart-count">(0)</span>
         </button>
       </div>
     </header>
-    <!-- Mobile Menu -->
-<nav class="mobile-menu" id="mobileMenu">
-  <ul>
-    <li><a href="#">NOVEDADES</a></li>
-    <li><a href="#">METAL TREND</a></li>
-    <li><a href="#">GYM COLLECTION</a></li>
-    <li><a href="#">VINCENT VAN DUYSEN</a></li>
-    <li><a href="#">DORMITORIO</a></li>
-    <li><a href="#">DECORACIÓN</a></li>
-    <li><a href="#">MUEBLES</a></li>
-    <li><a href="#">COCINA Y COMEDOR</a></li>
-    <li class="has-submenu">
-  <a href="#" class="menu-link">BAÑO</a>
-  <ul class="submenu">
-    <li><a href="#" data-category="toallas">TOALLAS</a></li>
-    <li><a href="#" data-category="accesorios">TOALLAS BÁSICAS</a></li>
-    <li><a href="#" data-category="cestas">ALBORNOCES Y ZAPATILLAS</a></li>
-    <li><a href="#" data-category="cestas">CORTINAS DE BAÑO</a></li>
-    <br>
-    <li><a href="#" data-category="cestas">ACCESORIOS DE BAÑO</a></li>
-    <li><a href="#" data-category="cestas">CESTAS</a></li>
-    <li><a href="#" data-category="cestas">TOALLEROS Y COLGADORES</a></li>
-    <li><a href="#" data-category="cestas">ESPEJOS</a></li>
-  </ul>
-</li>
 
-    
-    <li><a href="#">FRAGANCIAS</a></li>
-  </ul>
-</nav>
 
     <!-- Main Content -->
     <main class="main">
       <h1 class="visually-hidden">Zara Home - Colección Hogar</h1>
-       <section id="productsContainer" class="products-grid"></section>
+      
       <!-- Hero Section -->
       <section class="hero" id="hero">
         <h2 class="visually-hidden">Novedades y colecciones destacadas</h2>
-
+        
         <img
           src="./img/cosmetica_01.jpg"
           alt="Colección de cosmética - Novedades Zara Home"
           class="hero-image"
           id="heroImage"
         />
-
-        <!-- Navigation Categories -->
-        <nav class="hero-nav">
+        
+        <nav class="hero-nav" aria-label="Colecciones destacadas">
           <ul class="hero-nav-list">
-            <li><a href="#" class="hero-nav-link active">NOVEDADES</a></li>
-            <li><a href="#" class="hero-nav-link">METAL TREND</a></li>
-            <li><a href="#" class="hero-nav-link">GYM COLLECTION</a></li>
-            <li><a href="#" class="hero-nav-link">VINCENT VAN DUYSEN</a></li>
+            <li>
+              <a
+                href="/novedades"
+                class="hero-nav-link active"
+                data-image="./img/cosmetica_01.jpg"
+              >
+                NOVEDADES
+              </a>
+            </li>
+            <li>
+              <a
+                href="/metal-trend"
+                class="hero-nav-link"
+                data-image="./img/metal_trend.jpg"
+              >
+                METAL TREND
+              </a>
+            </li>
+            <li>
+              <a
+                href="/gym-collection"
+                class="hero-nav-link"
+                data-image="./img/gym_collection.jpg"
+              >
+                GYM COLLECTION
+              </a>
+            </li>
+            <li>
+              <a
+                href="/vincent-van-duysen"
+                class="hero-nav-link"
+                data-image="./img/vincent_van_duysen.jpg"
+              >
+                VINCENT VAN DUYSEN
+              </a>
+            </li>
           </ul>
         </nav>
       </section>
+
+      
+            <!-- Featured Products -->
+      <section class="featured" id="featured">
+        <h2 class="section-title">LO MÁS VENDIDO</h2>
+        <div class="products-grid">
+          <article class="product-card">
+            <div class="product-image-wrapper">
+              <img src="https://static.zarahome.net/assets/public/3c9d/dae0/b78c4e5e852c/ad1015aa0e5f/46371000802-p1/46371000802-p1.jpg?ts=1744021965534&f=auto&w=680" alt="Ceramic vase" class="product-image" />
+              <button class="product-wishlist">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Jarrón cerámica artesanal</h3>
+              <p class="product-price">39,99 EUR</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="product-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1603006905003-be475563bc59?w=600&h=800&fit=crop&q=80" alt="Scented candle" class="product-image" />
+              <button class="product-wishlist">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Vela perfumada sándalo</h3>
+              <p class="product-price">25,99 EUR</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="product-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1616627561839-074385245ff6?w=600&h=800&fit=crop&q=80" alt="Linen bedding" class="product-image" />
+              <button class="product-wishlist">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Funda nórdica lino lavado</h3>
+              <p class="product-price">89,99 EUR</p>
+            </div>
+          </article>
+          <article class="product-card">
+            <div class="product-image-wrapper">
+              <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=600&h=800&fit=crop&q=80" alt="Modern lamp" class="product-image" />
+              <button class="product-wishlist">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+              </button>
+            </div>
+            <div class="product-info">
+              <h3 class="product-name">Lámpara diseño minimalista</h3>
+              <p class="product-price">119,00 EUR</p>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
+
+    <!-- Inline styles for visually-hidden class (could also be in your CSS file) -->
+    <style>
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+      
+      .hidden {
+        display: none !important;
+      }
+      
+      .cart-count:empty {
+        display: none;
+      }
+    </style>
   </body>
 </html>
