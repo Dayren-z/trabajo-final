@@ -1,3 +1,22 @@
+/*COMPORTAMIENTO HAMBURGUESAS*/ 
+const hamburgerBtn = document.getElementById("hamburgerBtn");
+const dropdownMenu = document.getElementById("dropdownMenu");
+const menuOverlay = document.getElementById("menuOverlay");
+
+hamburgerBtn.addEventListener("click", () => {
+  dropdownMenu.classList.toggle("active");
+  menuOverlay.classList.toggle("hidden");
+  hamburgerBtn.classList.toggle("active");
+  document.body.classList.toggle("menu-open");
+});
+
+menuOverlay.addEventListener("click", () => {
+  dropdownMenu.classList.remove("active");
+  menuOverlay.classList.add("hidden");
+  hamburgerBtn.classList.remove("active");
+  document.body.classList.remove("menu-open");
+});
+
 // =========================
 // CONSTANTS & CONFIG
 // =========================
